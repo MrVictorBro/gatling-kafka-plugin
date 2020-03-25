@@ -13,5 +13,5 @@ case class KafkaRequestBuilderBase(requestName: Expression[String]) {
 
   def send[K, V](key: Expression[K], payload: Expression[V], headers: Map[String, String])(implicit sender: Sender[K, V]): RequestBuilder[K, V] =
     sender.send(requestName, Some(key), payload, headers)
-
 }
+

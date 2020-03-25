@@ -11,6 +11,7 @@ import io.gatling.core.util.NameGen
 import org.apache.kafka.clients.producer._
 import ru.tinkoff.gatling.kafka.protocol.KafkaProtocol
 import ru.tinkoff.gatling.kafka.request.builder.KafkaAttributes
+import ru.tinkoff.gatling.kafka.utils.HeadersConverter.mapToHeaders
 
 class KafkaRequestAction[K, V](val producer: KafkaProducer[K, V],
                                val attr: KafkaAttributes[K, V],
@@ -18,7 +19,7 @@ class KafkaRequestAction[K, V](val producer: KafkaProducer[K, V],
                                val kafkaProtocol: KafkaProtocol,
                                val throttled: Boolean,
                                val next: Action)
-    extends ExitableAction with NameGen {
+  extends ExitableAction with NameGen {
 
   override val name: String    = genName("kafkaRequest")
   val statsEngine: StatsEngine = coreComponents.statsEngine
@@ -49,9 +50,9 @@ class KafkaRequestAction[K, V](val producer: KafkaProducer[K, V],
     kafkaAttributes payload session map { payload =>
       val record = kafkaAttributes.key match {
         case Some(k) =>
-          new ProducerRecord[K, V](kafkaProtocol.topic, k(session).toOption.get, payload)
+          new ProducerRecord[K, V](kafkaProtocol.topic, null, k(session).toOption.get, payload, mapToHeaders(kafkaAttributes.headers))
         case None =>
-          new ProducerRecord[K, V](kafkaProtocol.topic, payload)
+          new ProducerRecord[K, V](kafkaProtocol.topic, null, null.asInstanceOf[K], payload, mapToHeaders(kafkaAttributes.headers))
       }
 
       val requestStartDate = clock.nowMillis

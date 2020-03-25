@@ -20,6 +20,6 @@ trait LowPriorSender {
                         payload: Expression[V],
                         headers: Map[String, String]): RequestBuilder[K, V] =
         KafkaRequestBuilder[K, V](KafkaAttributes(requestName, key, payload, headers))
-
     }
 }
+

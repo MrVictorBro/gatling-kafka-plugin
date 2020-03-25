@@ -1,4 +1,4 @@
-package ru.tinkoff.gatling.kafka.headers
+package ru.tinkoff.gatling.kafka.utils
 
 import java.util
 import java.util.stream.Collectors

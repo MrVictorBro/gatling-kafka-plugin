@@ -12,7 +12,7 @@ import org.apache.avro.generic.GenericRecord
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord, RecordMetadata}
 import ru.tinkoff.gatling.kafka.protocol.KafkaProtocol
 import ru.tinkoff.gatling.kafka.request.builder.Avro4sAttributes
-import ru.tinkoff.gatling.kafka.headers.HeadersConverter.mapToHeaders
+import ru.tinkoff.gatling.kafka.utils.HeadersConverter.mapToHeaders
 
 class KafkaAvro4sRequestAction[K, V](val producer: KafkaProducer[K, GenericRecord],
                                      val attr: Avro4sAttributes[K, V],
