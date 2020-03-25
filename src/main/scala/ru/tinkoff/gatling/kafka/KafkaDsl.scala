@@ -9,7 +9,7 @@ trait KafkaDsl {
 
   val kafka: KafkaProtocolBuilder.type = KafkaProtocolBuilder
 
-  def kafka(requestName: Expression[String]) =
+  def kafka(requestName: Expression[String]): KafkaRequestBuilderBase =
     KafkaRequestBuilderBase(requestName)
 
   implicit def kafkaProtocolBuilder2kafkaProtocol(builder: KafkaProtocolBuilder): KafkaProtocol = builder.build
