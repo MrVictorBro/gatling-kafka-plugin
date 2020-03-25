@@ -1,4 +1,4 @@
-# gatling-kafka-plugin
+# gatling-kafka-plugin [ ![Download](https://api.bintray.com/packages/letsrokk/github/gatling-kafka-plugin/images/download.svg) ](https://bintray.com/letsrokk/github/adaptavist-jira-parent/_latestVersion)
 
 ## Introduction
 
