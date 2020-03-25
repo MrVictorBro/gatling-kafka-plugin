@@ -20,7 +20,7 @@ class KafkaAvro4sRequestAction[K, V](val producer: KafkaProducer[K, GenericRecor
                                      val kafkaProtocol: KafkaProtocol,
                                      val throttled: Boolean,
                                      val next: Action)
-    extends ExitableAction with NameGen {
+  extends ExitableAction with NameGen {
 
   val statsEngine: StatsEngine = coreComponents.statsEngine
   val clock                    = new DefaultClock
