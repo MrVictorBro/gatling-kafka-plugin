@@ -12,6 +12,7 @@ import org.apache.avro.generic.GenericRecord
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord, RecordMetadata}
 import ru.tinkoff.gatling.kafka.protocol.KafkaProtocol
 import ru.tinkoff.gatling.kafka.request.builder.Avro4sAttributes
+import ru.tinkoff.gatling.kafka.headers.HeadersConverter.mapToHeaders
 
 class KafkaAvro4sRequestAction[K, V](val producer: KafkaProducer[K, GenericRecord],
                                      val attr: Avro4sAttributes[K, V],
@@ -45,8 +46,8 @@ class KafkaAvro4sRequestAction[K, V](val producer: KafkaProducer[K, GenericRecor
 
     attr payload session map { payload =>
       val record = attr.key
-        .map(k => new ProducerRecord(kafkaProtocol.topic, k(session).toOption.get, attr.format.to(payload)))
-        .getOrElse(new ProducerRecord(kafkaProtocol.topic, attr.format.to(payload)))
+        .map(k => new ProducerRecord(kafkaProtocol.topic, null, k(session).toOption.get, attr.format.to(payload), mapToHeaders(attr.headers)))
+        .getOrElse(new ProducerRecord(kafkaProtocol.topic, null, null.asInstanceOf[K], attr.format.to(payload), mapToHeaders(attr.headers)))
 
       val requestStartDate = clock.nowMillis
 
