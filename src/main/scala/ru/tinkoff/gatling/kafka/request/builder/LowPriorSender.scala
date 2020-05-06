@@ -7,8 +7,14 @@ trait LowPriorSender {
   implicit def noSchemaSender[K, V]: Sender[K, V] =
     new Sender[K, V] {
 
-      override def send(requestName: Expression[String], payload: Expression[V]): RequestBuilder[Nothing, V] =
+      override def send(requestName: Expression[String],
+                        payload: Expression[V]): RequestBuilder[Nothing, V] =
         KafkaRequestBuilder[Nothing, V](KafkaAttributes(requestName, None, payload, HashMap()))
+
+      override def send(requestName: Expression[String],
+                        payload: Expression[V],
+                        headers: Map[String, String]): RequestBuilder[Nothing, V] =
+        KafkaRequestBuilder[Nothing, V](KafkaAttributes(requestName, None, payload, headers))
 
       override def send(requestName: Expression[String],
                         key: Option[Expression[K]],
